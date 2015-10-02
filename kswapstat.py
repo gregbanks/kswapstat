@@ -55,7 +55,7 @@ def main():
         if last_run_data is not None:
             rates = {k: (data[k] - last_run_data[k]) / (now - last_run_time)
                      for k in data}
-            print_ln(['%d/s' % (rates[k]) for k in sorted(KEYS)])
+            print_ln(['%d/s' % (rates[k]) if k in rates else 'n/a' for k in sorted(KEYS)])
 
         last_run_data = data
         last_run_time = now
