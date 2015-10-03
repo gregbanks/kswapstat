@@ -51,7 +51,7 @@ def sig_handler(num, frame):
 
 
 def print_header():
-    print ('{:<' + str(max(WIDTH, len('timestamp'))) + '}').format('timestamp'),
+    print ('{:<27}').format('timestamp'),
     for k in sorted(KEYS):
         _k = KEYS[k].get('short', k)
         print ('{:<' + str(max(WIDTH, len(_k))) + '}').format(_k),
@@ -59,11 +59,11 @@ def print_header():
 
 
 def print_ln(data):
-    print ('{:<' + str(max(WIDTH, len('timestamp'))) + '}').format(datetime.utcnow().isoformat()),
+    print ('{:<27}').format(datetime.utcnow().isoformat()),
     for i, k in enumerate(sorted(KEYS)):
         _k = KEYS[k].get('short', k)
         print ('{:<' + str(max(WIDTH, len(_k))) + '}').format(
-                '{data[0]!s}/s {data[1]!s}'.format(data=data[i])),
+                '{data[0]:.1f}/s {data[1]:d}'.format(data=data[i])),
     print
 
 
@@ -107,4 +107,3 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
-
