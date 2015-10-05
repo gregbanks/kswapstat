@@ -62,8 +62,12 @@ def print_ln(data):
     print ('{:<27}').format(datetime.utcnow().isoformat()),
     for i, k in enumerate(sorted(KEYS)):
         _k = KEYS[k].get('short', k)
-        print ('{:<' + str(max(WIDTH, len(_k))) + '}').format(
-                '{data[0]:.1f}/s {data[1]:d}'.format(data=data[i])),
+        if 'n/a' in data[i]:
+            print ('{:<' + str(max(WIDTH, len(_k))) + '}').format(
+                   '{data[0]} {data[1]}'.format(data=data[i])),
+        else:
+            print ('{:<' + str(max(WIDTH, len(_k))) + '}').format(
+                   '{data[0]:.1f}/s {data[1]:d}'.format(data=data[i])),
     print
 
 
@@ -98,7 +102,8 @@ def main():
                 totals[k] += data[k] - last_run_data[k]
             rates = {k: (data[k] - last_run_data[k]) / (now - last_run_time)
                      for k in data}
-            print_ln([(rates[k] if k in rates else 'n/a', totals[k]) for k in sorted(KEYS)])
+            print_ln([(rates[k] if k in rates else 'n/a', 
+                       totals[k] if k in rates else 'n/a') for k in sorted(KEYS)])
 
         last_run_data = data
         last_run_time = now
